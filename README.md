@@ -25,3 +25,10 @@
   2. packet_project_id
   3. the various password (lets just stick with letters and numbers for now please)
 
+9. terraform plan .       (to check for obvious errors)
+
+10. terraform apply .     (hopefully this will run without errors expect it to take 30 minutes)
+
+11. terraform show  (look for network.0.address )
+
+12. login with ssh as root, or just go direct to uwm to login/launch
