@@ -1,17 +1,27 @@
 
-Steps:
+#Steps:
+
+0. install terraform.io
+
 1. register packet.net account
+
 2. login to app.packet.net:
-  a. add your ssh key
-  b. create new project
-  c. create api key
+  1. add your ssh key
+  2. create new project
+  3. create api key
+
 3. clone this repo 
+
 4. cd virl_packet
+
 5. copy your current salt keys into the keys directory as minion.pem and minion.pub
-5. cp orig.variables.tf variables.tf
-6. get your project id  curl -H 'X-Auth-Token: putAPIkeyhere' https://api.packet.net/projects
-7. edit variables.tf and alter at least
-  a. packet_api_key
-  b. packet_project_id
-  c. the various password (lets just stick with letters and numbers for now please)
+
+6. cp orig.variables.tf variables.tf
+
+7. get your project id  curl -H 'X-Auth-Token: putAPIkeyhere' https://api.packet.net/projects
+
+8. edit variables.tf and alter at least
+  1. packet_api_key
+  2. packet_project_id
+  3. the various password (lets just stick with letters and numbers for now please)
 
