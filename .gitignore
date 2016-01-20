@@ -1,0 +1,10 @@
+*-e
+*~
+keys/minion.pem
+keys/minion.pub
+variables.tf
+conf/orig.extra.conf
+*.tfstate
+*.tfstate.backup
+*.sw[op]
+.DS_Store
