@@ -1,34 +1,45 @@
 
 #Steps:
 
-0. install terraform.io
+0. install terraform.io to your VIRL Server. This is available from https://www.terraform.io/downloads.html. Select the Linux 64-bit version.
 
-1. register packet.net account
+1. On your VIRL server, generate an ssh key. You can do this using the command `ssh-keygen -t rsa`. Your public key is now available as .ssh/id_rsa.pub in /home/virl folder. 
 
-2. login to app.packet.net:
-  1. add your ssh key
+2. register packet.net account
+
+3. login to app.packet.net:
+  1. add your ssh public rsa key (from /home/virl/.ssh/id_rsa.pub)
   2. create new project
-  3. create api key
+  3. create api key token
 
-3. clone this repo 
+4. On you VIRL server, go to /home/virl and then clone this repo using the command `git clone https://github.com/Snergster/virl_packet.git`
 
-4. cd virl_packet
+5. `cd virl_packet`
 
-5. copy your current salt keys into the keys directory as minion.pem and minion.pub
+6. `cd keys`
 
-6. cp orig.variables.tf variables.tf
+7. copy your current salt keys into the keys directory as follows:
+   `sudo cp /etc/salt/pki/minion/minion.pem .`
+   `sudo cp /etc/salt/pki/minion/minion.pub .`
 
-7. get your project id  curl -H 'X-Auth-Token: putAPIkeyhere' https://api.packet.net/projects
+8. `cd..`
 
-8. edit variables.tf and alter at least
-  1. packet_api_key
-  2. packet_project_id
-  3. the various password (lets just stick with letters and numbers for now please)
+9. `cp orig.variables.tf variables.tf`
 
-9. terraform plan .       (to check for obvious errors)
+10. get your project id  `curl -H 'X-Auth-Token: putAPIkeyhere' https://api.packet.net/projects`
 
-10. terraform apply .     (hopefully this will run without errors expect it to take 30 minutes)
+11. edit `variables.tf` and alter at the value in the 'default' fields for at least the following variables
+  1. salt_id
+  2. packet_api_key
+  3. packet_project_id
+  4. the various password (lets just stick with letters and numbers for now please)
 
-11. terraform show  (look for network.0.address )
+	**Do NOT alter the salt_master value**
 
-12. login with ssh as root, or just go direct to uwm to login/launch
+12. `terraform plan .`       (to check for obvious errors)
+
+13. `terraform apply .`     (hopefully this will run without errors expect it to take 30 minutes)
+
+14. `terraform show`  (look for network.0.address )
+
+15. login with ssh as `root@<network.0.address>`, or just go direct to `http://<network.0.address>` to login to your VIRL server webpage.
