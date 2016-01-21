@@ -43,3 +43,8 @@
 14. `../terraform/terraform show`  (look for network.0.address )
 
 15. login with ssh as `root@<network.0.address>`, or just go direct to `http://<network.0.address>` to login to your VIRL server webpage.
+ 
+16. `../terraform/terraform destory` to terminate the server instance
+
+To start up again, repeat steps 14, 15, 16.
+ 
