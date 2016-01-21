@@ -1,7 +1,7 @@
 
 #Steps:
 
-0. install terraform.io to your VIRL Server. This is available from https://www.terraform.io/downloads.html. Select the Linux 64-bit version.
+0. install terraform.io to your VIRL Server. This is available from https://www.terraform.io/downloads.html. Select the Linux 64-bit version. Create a directory called 'terraform' and extract the .zip file into this directory.
 
 1. On your VIRL server, generate an ssh key. You can do this using the command `ssh-keygen -t rsa`. Your public key is now available as .ssh/id_rsa.pub in /home/virl folder. 
 
@@ -36,10 +36,10 @@
 
 	**Do NOT alter the salt_master value**
 
-12. `terraform plan .`       (to check for obvious errors)
+12. `../terraform/terraform plan .`       (to check for obvious errors)
 
-13. `terraform apply .`     (hopefully this will run without errors expect it to take 30 minutes)
+13. `../terraform/terraform apply .`     (hopefully this will run without errors expect it to take 30 minutes)
 
-14. `terraform show`  (look for network.0.address )
+14. `../terraform/terraform show`  (look for network.0.address )
 
 15. login with ssh as `root@<network.0.address>`, or just go direct to `http://<network.0.address>` to login to your VIRL server webpage.
