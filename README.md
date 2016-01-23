@@ -22,7 +22,7 @@
    `sudo cp /etc/salt/pki/minion/minion.pem .`
    `sudo cp /etc/salt/pki/minion/minion.pub .`
 
-8. `cd..`
+8. `cd ..`
 
 9. `cp orig.variables.tf variables.tf`
 
