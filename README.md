@@ -27,6 +27,7 @@
 9. `cp orig.variables.tf variables.tf`
 
 10. get your project id  `curl -H 'X-Auth-Token:<putAPIkeyhere>' https://api.packet.net/projects`
+    The command will return a set of output. Look for the field starting "id": Make a note of the UUID that follows that.
 
 11. edit `variables.tf` and alter at the value in the 'default' fields for at least the following variables
   1. salt_id
