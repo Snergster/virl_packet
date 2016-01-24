@@ -12,7 +12,8 @@
   2. create new project
   3. create api key token
 
-4. On you VIRL server, go to /home/virl and then clone this repo using the command `git clone https://github.com/Snergster/virl_packet.git`
+4. On you VIRL server, go to /home/virl and then clone this repo using the command 
+   `git clone https://github.com/Snergster/virl_packet.git`
 
 5. `cd virl_packet`
 
@@ -26,7 +27,8 @@
 
 9. `cp orig.variables.tf variables.tf`
 
-10. get your project id  `curl -H 'X-Auth-Token:<putAPIkeyhere>' https://api.packet.net/projects`
+10. get your project id using the command
+   `curl -H 'X-Auth-Token:<putAPIkeyhere>' https://api.packet.net/projects`
     The command will return a set of output. Look for the field starting "id": Make a note of the UUID that follows that.
 
 11. edit `variables.tf` and alter at the value in the 'default' fields for at least the following variables
