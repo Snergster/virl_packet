@@ -37,7 +37,7 @@
 
 8. `cd ..`
 
-9. `cp orig.variables.tf variables.tf`
+9. `cp variables.tf.orig variables.tf`
 
 10. get your project id using the command
 
