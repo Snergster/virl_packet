@@ -1,18 +1,18 @@
 
 #Steps:
 
-0. install terraform.io to your VIRL Server. This is available from https://www.terraform.io/downloads.html. Select the Linux 64-bit version. Create a directory called 'terraform' and extract the .zip file into this directory.
+0. install terraform.io to your local VIRL Server. This is available from https://www.terraform.io/downloads.html. Select the Linux 64-bit version. Create a directory called 'terraform' and extract the .zip file into this directory.
 
-1. On your VIRL server, generate an ssh key. You can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. Your public key is now available as .ssh/id_rsa.pub in /home/virl folder. 
+1. On your local VIRL server, generate an ssh key. You can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. Your public key is now available as .ssh/id_rsa.pub in /home/virl folder. 
 
 2. register packet.net account
 
-3. login to app.packet.net:
+3. Log in to app.packet.net:
   1. add your ssh public rsa key (from /home/virl/.ssh/id_rsa.pub)
   2. create new project
   3. create api key token
 
-4. On you VIRL server, go to /home/virl and then clone this repo using the command
+4. On your local VIRL server, go to /home/virl and then clone this repo using the command
 
    `git clone https://github.com/Snergster/virl_packet.git`
 
@@ -51,9 +51,15 @@
 
 14. `../terraform/terraform show`  (look for network.0.address )
 
-15. login with ssh as `root@<network.0.address>`, or just go direct to `http://<network.0.address>` to login to your VIRL server webpage.
+15. login to the remote VIRL server using ssh as `root@<network.0.address>`, or just go direct to `http://<network.0.address>` to login to your VIRL server webpage.
+
+16. When logged in, to run commands such as 'nova service-list' you need to be operating as the virl user. To do this, use the command
  
-16. `../terraform/terraform destroy` to terminate the server instance
+    `su -l virl`
+
+16. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
+ 
+    `../terraform/terraform destroy`
 
 To start up again, repeat steps 14, 15, 16.
 
