@@ -33,7 +33,7 @@ variable "packet_api_key" {
 }
 
 variable "guest_password" {
-	description = "password for the guest account"
+	description = "password for the guest account - stick with letters and numbers for now please"
 	default = "321guest123"
 }
 
@@ -43,18 +43,18 @@ variable "ssh_private_key" {
 }
 
 variable "uwmadmin_password" {
-	description = "password for the uwm admin account"
+	description = "password for the uwm admin account - stick with letters and numbers for now please"
 	default = "321guest123"
 }
 
 variable "openstack_password" {
-	description = "password for openstack admin account"
-	default = "123password321"
+	description = "password for openstack admin account - max 10 characters - stick with letters and numbers for now please"
+	default = "123pass321"
 }
 
 variable "mysql_password" {
-	description = "password for mysql"
-	default = "123mypass321"
+	description = "password for mysql - max 10 characters - stick with letters and numbers for now please"
+	default = "123mysq321"
 }
 
 variable "openstack_token" {
