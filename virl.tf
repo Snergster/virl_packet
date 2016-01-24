@@ -6,10 +6,6 @@ provider "packet" {
 #project creation block start
 #project creation block end
 
-
-#ssh key addition block start
-#ssh key addition block end
-
 # 
 resource "packet_device" "virl_test" { 
         hostname = "${var.hostname}"

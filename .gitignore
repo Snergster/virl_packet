@@ -1,5 +1,7 @@
 *-e
 *~
+id_rsa
+id_rsa.pub
 keys/minion.pem
 keys/minion.pub
 variables.tf
