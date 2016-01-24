@@ -3,14 +3,21 @@
 
 0. install terraform.io to your local VIRL Server. This is available from https://www.terraform.io/downloads.html. Select the Linux 64-bit version. Create a directory called 'terraform' and extract the .zip file into this directory.
 
-1. On your local VIRL server, generate an ssh key. You can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. Your public key is now available as .ssh/id_rsa.pub in /home/virl folder. 
+1. On your local VIRL server, generate an ssh key. You can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. Your public key is now available as .ssh/id_rsa.pub in /home/virl directory. 
 
 2. register packet.net account
 
 3. Log in to app.packet.net:
-  1. add your ssh public rsa key (from /home/virl/.ssh/id_rsa.pub)
-  2. create new project
-  3. create api key token
+  1. Add your ssh public rsa key.  
+  
+     To get your public key from your local VIRL server, use the command
+
+     `cat /home/virl/.ssh/id_rsa.pub`
+     
+     Paste the contents into the field on the Packet.net page.
+     
+  2. Create new project
+  3. Create api key token
 
 4. On your local VIRL server, go to /home/virl and then clone this repo using the command
 
