@@ -20,11 +20,13 @@
 
 6. `cd keys`
 
-7. copy your current salt keys into the keys directory as follows:
+7. copy your current salt keys into the keys directory, and set the permissions as follows:
 
    `sudo cp /etc/salt/pki/minion/minion.pem .`
 
    `sudo cp /etc/salt/pki/minion/minion.pub .`
+   
+   `sudo chmod 444 ./minion.pem`
 
 8. `cd ..`
 
