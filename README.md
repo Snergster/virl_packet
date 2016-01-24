@@ -56,4 +56,6 @@
 16. `../terraform/terraform destroy` to terminate the server instance
 
 To start up again, repeat steps 14, 15, 16.
+
+[NOTE] Your uwmadmin and guest passwords are in variables.tf. If you can't remember them, this is where you can find them.
  
