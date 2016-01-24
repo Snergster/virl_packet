@@ -37,6 +37,11 @@ variable "guest_password" {
 	default = "321guest123"
 }
 
+variable "ssh_private_key" {
+	description = "location of ssh private key that matches the public key you gave to packet"
+	default = "~/.ssh/id_rsa"
+}
+
 variable "uwmadmin_password" {
 	description = "password for the uwm admin account"
 	default = "321guest123"
