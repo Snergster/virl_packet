@@ -3,7 +3,7 @@
 
 0. install terraform.io to your VIRL Server. This is available from https://www.terraform.io/downloads.html. Select the Linux 64-bit version. Create a directory called 'terraform' and extract the .zip file into this directory.
 
-1. On your VIRL server, generate an ssh key. You can do this using the command `ssh-keygen -t rsa`. Do NOT set a password during key generation. Your public key is now available as .ssh/id_rsa.pub in /home/virl folder. 
+1. On your VIRL server, generate an ssh key. You can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. Your public key is now available as .ssh/id_rsa.pub in /home/virl folder. 
 
 2. register packet.net account
 
