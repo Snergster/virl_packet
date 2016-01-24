@@ -37,7 +37,7 @@
     The command will return a set of output. Look for the field starting "id": Make a note of the UUID that follows that.
 
 11. edit `variables.tf` and alter at the value in the 'default' fields for at least the following variables
-  1. salt_id
+  1. salt_id (xxxxxxxx.virl.info, the 'xxxxxxxx' is your salt_id)
   2. packet_api_key
   3. packet_project_id
   4. the various password (lets just stick with letters and numbers for now please)
