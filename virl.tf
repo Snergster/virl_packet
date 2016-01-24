@@ -3,14 +3,12 @@ provider "packet" {
         auth_token = "${var.packet_api_key}"
 }
 
-# Create a project
-#resource "packet_project" "virltest" {
-#        name = "virltest"
-#        #payment_method = "PAYMENT_METHOD_ID" # Only required for a non-default payment method
-#}
+#project creation block start
+#project creation block end
 
 
-
+#ssh key addition block start
+#ssh key addition block end
 
 # 
 resource "packet_device" "virl_test" { 
