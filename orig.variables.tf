@@ -15,7 +15,7 @@ variable "salt_domain" {
 
 variable "hostname" {
 	description = "Hostname for packet and machine"
-	default = "vtest2"
+	default = "virltest"
 }
 
 variable "packet_machine_type" {
@@ -44,7 +44,7 @@ variable "ssh_private_key" {
 
 variable "uwmadmin_password" {
 	description = "password for the uwm admin account - stick with letters and numbers for now please"
-	default = "321guest123"
+	default = "321uwmp123"
 }
 
 variable "openstack_password" {
