@@ -40,7 +40,7 @@ variable "guest_password" {
 
 variable "ssh_private_key" {
 	description = "location of ssh private key that matches the public key you gave to packet"
-	default = "./id_rsa"
+	default = "~/.ssh/id_rsa"
 }
 
 variable "uwmadmin_password" {
