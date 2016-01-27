@@ -10,28 +10,12 @@
 2. Register with www.packet.net for an account
 
 3. Log in to app.packet.net:
-  1. Add your ssh public rsa key.  
-  
-     To get your public key from your local VIRL server, use the command
-
-     `cat /home/virl/.ssh/id_rsa.pub`
-     
-     Paste the contents into the field on the Packet.net page.
-     
-  2. Create new project
   3. Create api key token
 
 4. `cd virl_packet`
 
-5. get your project id using the command
-
-   `curl -H 'X-Auth-Token:<putAPIkeyhere>' https://api.packet.net/projects`
-
-    The command will return a set of output. Look for the field starting "id": Make a note of the UUID that follows that.
-
 6. edit `variables.tf` and alter at the value in the 'default' fields for at least the following variables
   1. packet_api_key
-  2. packet_project_id
 	**Do NOT alter the salt_master value**
 
 7. Run the command 
