@@ -3,8 +3,14 @@ provider "packet" {
         auth_token = "${var.packet_api_key}"
 }
 
-#project creation block start
-#project creation block end
+resource "packet_project" "virl_project" {
+        name = "virl server on packet"
+}
+
+resource "packet_ssh_key" "virlkey" {
+        name = "virlkey"
+        public_key = "${file("${var.ssh_private_key}.pub")}"
+}
 
 # 
 resource "packet_device" "virl_test" { 
@@ -13,7 +19,8 @@ resource "packet_device" "virl_test" {
         facility = "ewr1"
         operating_system = "ubuntu_14_04"
         billing_cycle = "hourly"
-        project_id = "${var.packet_project_id}"
+        project_id = "${packet_project.virl_project.id}"
+        depends_on = ["packet_ssh_key.virlkey","packet_project.virl_project"]
 
 
   connection {
