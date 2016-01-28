@@ -80,6 +80,8 @@ resource "packet_device" "virl" {
          "set -x",
          "wget -O install_salt.sh https://bootstrap.saltstack.com",
          "sh ./install_salt.sh -P git v2015.8.3",
+         "printf '/usr/bin/curl -H X-Auth-Token:${var.packet_api_key} -X DELETE https://api.packet.net/devices/${packet_device.virl.id}\n'>/etc/deadtimer",
+         "at now + ${var.dead_mans_timer} hours -f /etc/deadtimer",
          "salt-call state.sls common.users",
          "salt-call state.highstate",
          "salt-call state.sls virl.basics",
@@ -95,8 +97,6 @@ resource "packet_device" "virl" {
          "salt-call state.sls virl.routervms",
          "salt-call state.sls virl.openvpn",
          "salt-call state.sls virl.openvpn.packet",
-         "printf '/usr/bin/curl -H X-Auth-Token:${var.packet_api_key} -X DELETE https://api.packet.net/devices/${packet_device.virl.id}\n'>/home/virl/deadtimer",
-         "at now + ${var.dead_mans_timer} hours -f /home/virl/deadtimer",
          "reboot"
    ]
   }
