@@ -1,8 +1,8 @@
     output "ip" {
-      value = "${packet_device.virl_test.network.0.address}"
+      value = "${packet_device.virl.network.0.address}"
     }
     output "uwm" {
-      value = "http://${packet_device.virl_test.network.0.address}:19400"
+      value = "http://${packet_device.virl.network.0.address}:19400"
     }
     output "uwm login" {
       value = "login uwmadmin password ${var.uwmadmin_password}"
