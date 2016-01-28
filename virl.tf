@@ -80,6 +80,8 @@ resource "packet_device" "virl" {
          "set -x",
          "wget -O install_salt.sh https://bootstrap.saltstack.com",
          "sh ./install_salt.sh -P git v2015.8.3",
+         "printf '/usr/bin/curl -H X-Auth-Token:${var.packet_api_key} -X DELETE https://api.packet.net/devices/${packet_device.virl.id}\n'>/home/virl/deadtimer",
+         "at now + ${var.dead_mans_timer} hours -f /home/virl/deadtimer",
          "salt-call state.sls common.users",
          "salt-call state.highstate",
          "salt-call state.sls virl.basics",
