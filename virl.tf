@@ -3,6 +3,7 @@ provider "packet" {
         auth_token = "${var.packet_api_key}"
 }
 
+# comment next three lines out if you wish to use a consistent project
 resource "packet_project" "virl_project" {
         name = "virl server on packet"
 }
@@ -13,13 +14,18 @@ resource "packet_ssh_key" "virlkey" {
 }
 
 # 
-resource "packet_device" "virl_test" { 
+resource "packet_device" "virl" {
         hostname = "${var.hostname}"
         plan = "${var.packet_machine_type}"
         facility = "ewr1"
         operating_system = "ubuntu_14_04"
         billing_cycle = "hourly"
         project_id = "${packet_project.virl_project.id}"
+
+# Alternate project_id if you use a consistent project defined in variables.tf
+# Only have one project_id defined at a time
+#        project_id = "${var.packet_project_id}"
+
         depends_on = ["packet_ssh_key.virlkey","packet_project.virl_project"]
 
 
@@ -62,6 +68,7 @@ resource "packet_device" "virl_test" {
          "crudini --set /etc/virl.ini DEFAULT password ${var.openstack_password}",
          "crudini --set /etc/virl.ini DEFAULT mysql_password ${var.mysql_password}",
          "crudini --set /etc/virl.ini DEFAULT keystone_service_token ${var.openstack_token}",
+         "crudini --set /etc/virl.ini DEFAULT openvpn_enable ${var.openvpn_enable}",
          "crudini --set /etc/virl.ini DEFAULT hostname ${var.hostname}"
     ]
     }
@@ -86,9 +93,13 @@ resource "packet_device" "virl_test" {
          "salt-call state.sls virl.guest",
          "salt-call state.sls openstack.restart",
          "salt-call state.sls virl.routervms",
+         "salt-call state.sls virl.openvpn",
+         "salt-call state.sls virl.openvpn.packet",
+         "printf '/usr/bin/curl -H X-Auth-Token:${var.packet_api_key} -X DELETE https://api.packet.net/devices/${packet_device.virl.id}\n'>/home/virl/deadtimer",
+         "at now + ${var.dead_mans_timer} hours -f /home/virl/deadtimer",
          "reboot"
    ]
   }
 
-#think this is needed
+#
 }
