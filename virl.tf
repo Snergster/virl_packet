@@ -22,7 +22,7 @@ resource "packet_device" "virl" {
         billing_cycle = "hourly"
 #        project_id = "${packet_project.virl_project.id}"
 
-# Alternate project_id if you use a consistent project defined in variables.tf
+# Alternate project_id. If you use a consistent project defined in variables.tf, uncomment the line below. Remember to comment out the line above!
 # Only have one project_id defined at a time
         project_id = "${var.packet_project_id}"
 
