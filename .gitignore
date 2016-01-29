@@ -10,3 +10,4 @@ conf/orig.extra.conf
 *.tfstate.backup
 *.sw[op]
 .DS_Store
+client.ovpn

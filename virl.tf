@@ -97,6 +97,21 @@ resource "packet_device" "virl" {
          "salt-call state.sls virl.routervms",
          "salt-call state.sls virl.openvpn",
          "salt-call state.sls virl.openvpn.packet",
+#This is to keep the sftp from failing and taking terraform out with it in case no vpn is actually installed
+         "touch /var/local/virl/client.ovpn"
+
+   ]
+  }
+    provisioner "local-exec" {
+        command = "sftp -o 'IdentityFile=${var.ssh_private_key}' -o 'StrictHostKeyChecking=no' root@${packet_device.virl.network.0.address}:/var/local/virl/client.ovpn client.ovpn"
+    }
+#
+   provisioner "remote-exec" {
+      inline = [
+        "sleep 5",
+        "reboot"
+        ]
+        }
          "reboot"
    ]
   }
