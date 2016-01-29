@@ -43,7 +43,15 @@
  
     `su -l virl`
 
-11. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
+11. The VIRL server is provisioned in a secure manner. To access the server, you must establish an OpenVPN tunnel to the server.
+    1. Install an OpenVPN client for your system.
+    2. Sftp to the IP address of your VIRL server. NOTE - you may need to configure your sftp client to use the id_rsa keys that's been 	generated for you
+    3. The 'client.ovpn' file is located at `/var/local/virl/client.ovpn'
+    4. Download the file and open it with your OpenVPN client
+    
+12. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.1.254  
+
+13. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
  
     `terraform destroy .`
 
