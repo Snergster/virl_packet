@@ -70,6 +70,6 @@ variable "salt_master" {
 
 # By default we automatically create a new project each time, if you dont want this, insert project id and change the two variables highlighted in virl.tf
 variable "packet_project_id" {
-	description = "After you create packet project, attach your ssh key, get your api key, then get id key with curl -H 'X-Auth-Token: putAPIkeyhere' https://api.packet.net/projects"
+	description = "After you create packet project, get your api key, then get your ptoject id key with curl -H 'X-Auth-Token: putAPIkeyhere' https://api.packet.net/projects"
     default = "bad_project_id"
 }
