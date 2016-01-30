@@ -31,6 +31,8 @@
    This will spin up your Remote VIRL server and install the VIRL software stack. If this runs without errors, expect it to take ~30 minutes. When it completes, the system will report the IP address of your Remote VIRL server. Login using
    
     `ssh root@<ip address>` or `ssh virl@<ip address>`
+    
+    NOTE - the VIRL server will reboot once the VIRL software has been installed. You must therefore wait until the reboot has completed before logging in.
 
 9. To see more information about your Remote VIRL server, run the command 
 
@@ -48,8 +50,11 @@
     2. The set up of the remote VIRL server will automatically configure the OpenVPN server. The 'client.ovpn' connection profile will be automatically downloaded to the directory from which you ran the `terraform apply .` command. 
     3. The 'client.ovpn' file can be copied out to other devices, such as a laptop hosting your local VIRL instance.
     4. Download the file and open it with your OpenVPN client
+   
+    NOTE - the VIRL server will reboot once the VIRL software has been installed. You must therefore wait until the reboot has completed before bringing up the OpenVPN tunnel.
     
-12. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.1.254  
+12. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.1.254.
+    If using VM Maestro, you must set up the connection profile to point to `172.16.1.254`
 
 13. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
  
