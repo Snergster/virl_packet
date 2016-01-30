@@ -117,8 +117,6 @@ resource "packet_device" "virl" {
         ]
         }
          "reboot"
-   ]
   }
 
 #
-}
