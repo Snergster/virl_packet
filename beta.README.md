@@ -30,7 +30,7 @@
    
    This will spin up your Remote VIRL server and install the VIRL software stack. If this runs without errors, expect it to take ~30 minutes. When it completes, the system will report the IP address of your Remote VIRL server. Login using
    
-    `ssh root@<ip address>`
+    `ssh root@<ip address>` or `ssh virl@<ip address>`
 
 9. To see more information about your Remote VIRL server, run the command 
 
@@ -39,14 +39,14 @@
    The output will provided details of your Remote VIRL server instance.
 
 
-10. When logged in, to run commands such as 'nova service-list' you need to be operating as the virl user. To do this, use the command
+10. If logged in as `root`, to run commands such as 'nova service-list' you need to be operating as the virl user. To do this, use the command
  
     `su -l virl`
 
 11. The VIRL server is provisioned in a secure manner. To access the server, you must establish an OpenVPN tunnel to the server.
     1. Install an OpenVPN client for your system.
-    2. Sftp to the IP address of your VIRL server. NOTE - you may need to configure your sftp client to use the id_rsa keys that's been 	generated for you
-    3. The 'client.ovpn' file is located at `/var/local/virl/client.ovpn'
+    2. The set up of the remote VIRL server will automatically configure the OpenVPN server. The 'client.ovpn' connection profile will be automatically downloaded to the directory from which you ran the `terraform apply .` command. 
+    3. The 'client.ovpn' file can be copied out to other devices, such as a laptop hosting your local VIRL instance.
     4. Download the file and open it with your OpenVPN client
     
 12. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.1.254  
