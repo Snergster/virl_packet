@@ -1,74 +1,66 @@
 
 #Steps:
 
-0. install terraform.io to your local VIRL Server. This is available from https://www.terraform.io/downloads.html. Select the Linux 64-bit version. Create a directory called 'terraform' and extract the .zip file into this directory.
+1. On your local VIRL server, run the command
 
-1. On your local VIRL server, generate an ssh key. You can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. Your public key is now available as .ssh/id_rsa.pub in /home/virl directory. 
-
-2. register packet.net account
+   `sudo salt-call -l debug state.sls virl.terraform`
+   
+   This will install terraform, clone the repo, create an ssh key, copy in minion keys and replace many variables in the variables.tf file.
+   
+2. Register with www.packet.net for an account
 
 3. Log in to app.packet.net:
-  1. Add your ssh public rsa key.  
-  
-     To get your public key from your local VIRL server, use the command
-
-     `cat /home/virl/.ssh/id_rsa.pub`
-     
-     Paste the contents into the field on the Packet.net page.
-     
-  2. Create new project
   3. Create api key token
 
-4. On your local VIRL server, go to /home/virl and then clone this repo using the command
+4. `cd virl_packet`
 
-   `git clone https://github.com/Snergster/virl_packet.git`
-
-5. `cd virl_packet`
-
-6. `cd keys`
-
-7. copy your current salt keys into the keys directory and set the permissions, using the commands
-
-   `sudo cp /etc/salt/pki/minion/minion.pem .`
-
-   `sudo cp /etc/salt/pki/minion/minion.pub .`
-   
-   `sudo chmod 444 ./minion.pem`
-
-8. `cd ..`
-
-9. `cp variables.tf.orig variables.tf`
-
-10. get your project id using the command
-
-   `curl -H 'X-Auth-Token:<putAPIkeyhere>' https://api.packet.net/projects`
-
-    The command will return a set of output. Look for the field starting "id": Make a note of the UUID that follows that.
-
-11. edit `variables.tf` and alter at the value in the 'default' fields for at least the following variables
-  1. salt_id (xxxxxxxx.virl.info, the 'xxxxxxxx' is your salt_id)
-  2. packet_api_key
-  3. packet_project_id
-  4. the various password (lets just stick with letters and numbers for now please)
+6. edit `variables.tf` and alter at the value in the 'default' fields for at least the following variables
+  1. packet_api_key
 	**Do NOT alter the salt_master value**
 
-12. `../terraform/terraform plan .`       (to check for obvious errors)
+7. Run the command 
 
-13. `../terraform/terraform apply .`     (hopefully this will run without errors expect it to take 30 minutes)
+   `terraform plan .`
+   
+   This will validate the terraform .tf file.
+   
+8. Run the command 
 
-14. `../terraform/terraform show`  (look for network.0.address )
+   `terraform apply .`     
+   
+   This will spin up your Remote VIRL server and install the VIRL software stack. If this runs without errors, expect it to take ~30 minutes. When it completes, the system will report the IP address of your Remote VIRL server. Login using
+   
+    `ssh root@<ip address>` or `ssh virl@<ip address>`
+    
+    NOTE - the VIRL server will reboot once the VIRL software has been installed. You must therefore wait until the reboot has completed before logging in.
 
-15. login to the remote VIRL server using ssh as `root@<network.0.address>`, or just go direct to `http://<network.0.address>` to login to your VIRL server webpage.
+9. To see more information about your Remote VIRL server, run the command 
 
-16. When logged in, to run commands such as 'nova service-list' you need to be operating as the virl user. To do this, use the command
+   `terraform show` 
+   
+   The output will provided details of your Remote VIRL server instance.
+
+
+10. If logged in as `root`, to run commands such as 'nova service-list' you need to be operating as the virl user. To do this, use the command
  
     `su -l virl`
 
-16. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
+11. The VIRL server is provisioned in a secure manner. To access the server, you must establish an OpenVPN tunnel to the server.
+    1. Install an OpenVPN client for your system.
+    2. The set up of the remote VIRL server will automatically configure the OpenVPN server. The 'client.ovpn' connection profile will be automatically downloaded to the directory from which you ran the `terraform apply .` command. 
+    3. The 'client.ovpn' file can be copied out to other devices, such as a laptop hosting your local VIRL instance.
+    4. Download the file and open it with your OpenVPN client
+   
+    NOTE - the VIRL server will reboot once the VIRL software has been installed. You must therefore wait until the reboot has completed before bringing up the OpenVPN tunnel.
+    
+12. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.1.254.
+    If using VM Maestro, you must set up the connection profile to point to `172.16.1.254`
+
+13. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
  
-    `../terraform/terraform destroy`
+    `terraform destroy .`
 
-To start up again, repeat steps 14, 15, 16.
+To start up again, repeat step 7.
 
-[NOTE] Your uwmadmin and guest passwords are in variables.tf. If you can't remember them, this is where you can find them.
+[NOTE] Your uwmadmin and guest passwords are in variables.tf. If you can't remember them, this is where you can find them, or by running terraform output
  
