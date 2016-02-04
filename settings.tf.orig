@@ -2,3 +2,8 @@ variable "packet_api_key" {
 	description = "get your packet api key at https://app.packet.net/portal#/api-keys "
     default = "bad_api_key"
 }
+
+variable "dead_mans_timer" {
+	description = "number of hours before your server is deleted "
+    default = "4"
+}

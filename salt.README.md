@@ -16,9 +16,9 @@
 
 5. edit `passwords.tf` Note: The salt state will generate new keys with each run
 
-6. Edit `api.tf` to replace the `default` field with your packet_api_key 
+6. Edit `settings.tf` to replace the `default` field with your packet_api_key 
 
-7. Edit `variable.tf` and edit the `packet_machine_type` default field to select the machine type (size) that you want
+7. Edit `variables.tf` and edit the `packet_machine_type` default field to select the machine type (size) that you want
 
 8. Run the command 
 

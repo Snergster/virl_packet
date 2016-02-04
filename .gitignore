@@ -13,3 +13,4 @@ conf/orig.extra.conf
 client.ovpn
 passwords.tf
 standalone.README.md
+settings.tf

@@ -32,12 +32,12 @@
 
 8. `cd ..`
 
-9. `cp variables.tf.orig variables.tf`, `cp passwords.tf.org passwords.tf`, `cp api.tf.orig api.tf`
+9. `cp variables.tf.orig variables.tf`, `cp passwords.tf.org passwords.tf`, `cp settings.tf.orig settings.tf`
 
 
 11. edit variable files 
   1. `variables.tf` and alter salt_id (xxxxxxxx.virl.info, the 'xxxxxxxx' is your salt_id)
-  2. `api.tf` and alter packet_api_key
+  2. `settings.tf` and alter packet_api_key
   3. `password.tf` the various password (lets just stick with letters and numbers for now please)
 
 12. `../terraform/terraform plan .`       (to check for obvious errors)

@@ -1,8 +1,4 @@
 
-variable "dead_mans_timer" {
-	description = "number of hours before your server is deleted "
-    default = "4"
-}
 
 variable "salt_id" {
 	description = "your salt_id"
