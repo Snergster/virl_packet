@@ -11,3 +11,5 @@ conf/orig.extra.conf
 *.sw[op]
 .DS_Store
 client.ovpn
+passwords.tf
+standalone.README.md
