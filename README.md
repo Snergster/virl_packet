@@ -3,8 +3,8 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' DIRECTLY FROM THEIR 
 #Steps:
 
 1. Install terraform.io for your operating system. This is available from https://www.terraform.io/downloads.html.  Extract the .zip file into a directory. You must make sure that the directory is then part of your 'path' environment, meaning that you can issue the command 'terraform' from the command line and it provides output. For instructions, please refer to https://www.terraform.io/intro/getting-started/install.html
- 
-WINDOWS USERS -  Go to Control panel -> System -> Advanced System settings* -> Environment Variables -> . Scroll down in system variables until you find PATH. Click 'edit' and change accordingly. BE SURE to include a semicolon at the end of the previous as that is the delimiter ie c:\path;c:\path2. You will need to launch a new command window for the settings to take effect.
+
+  WINDOWS USERS -  Go to Control panel -> System -> Advanced System settings* -> Environment Variables -> . Scroll down in system variables until you find PATH. Click 'edit' and change accordingly. BE SURE to include a semicolon at the end of the previous as that is the delimiter ie c:\path;c:\path2. You will need to launch a new command window for the settings to take effect.
 
 2. Install a Git client of your choice then 'clone' the repo at `https://github.com/Snergster/virl_packet.git`.
 
@@ -12,11 +12,11 @@ WINDOWS USERS -  Go to Control panel -> System -> Advanced System settings* -> E
 
 4. You need to generate an 'ssh key'. Depending on your operating system (Linux, Mac) you can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. 
 
-WINDOWS USERS - popular SSH clients will have a function to be able to generate an ssh key. Please create an SSHv2 RSA key. Do NOT set a passphrase during key generation. The system requires the key to be compatible with OpenSSH. Some utilities provide a function to 'export' the key for use with OpenSSH. Place a copy of the PRIVATE KEY (id_rsa) and the PUBLIC KEY (id_rsa.pub) into the virl_packet directory. 
+  WINDOWS USERS - popular SSH clients will have a function to be able to generate an ssh key. Please create an SSHv2 RSA key. Do NOT set a passphrase during key generation. The system requires the key to be compatible with OpenSSH. Some utilities provide a function to 'export' the key for use with OpenSSH. Place a copy of the PRIVATE KEY (id_rsa) and the PUBLIC KEY (id_rsa.pub) into the virl_packet directory. 
 
-LINUX AND MAC USER - set the permissions on the id_rsa.pub file using the command `chmod 755 id_rsa.pub`.
+  LINUX AND MAC USER - set the permissions on the id_rsa.pub file using the command `chmod 755 id_rsa.pub`.
 
-5. WINDOWS USERS - you must also install OpenSSL. This is available from `https://code.google.com/archive/p/openssl-for-windows/downloads`. Please install and add the 'bin' directory to your path. For example `"C:\Program Files (x86)\openssl\bin"`. See instrucions at step 1 for details on how to modify your path.
+5. WINDOWS USERS - you must also install OpenSSL. This is available from `https://code.google.com/archive/p/openssl-for-windows/downloads`. Please install and add the 'bin' directory to your path. For example `"C:\Program Files (x86)\openssl\bin"`. See instructions at step 1 for details on how to modify your path.
 
 6. register packet.net account
   1. Create api key token
@@ -25,22 +25,21 @@ LINUX AND MAC USER - set the permissions on the id_rsa.pub file using the comman
 
 8. Copy the content of your VIRL license key (e.g. 'xxxxxxxx.virl.info.pem') into the 'keys' directory and name the file `minion.pem`. MAKE SURE THAT YOU INCLUDE THE HEADER AND FOOTER OF THE FILE. 
 
-    LINUX AND MAC USERS - secure the .pem file using the command `sudo chmod 444 ./minion.pem`
+  LINUX AND MAC USERS - secure the .pem file using the command `sudo chmod 444 ./minion.pem`
 
 9. You now need to generate a .pub key from your .pem file.
 
-   issue the CLI command `openssl rsa -in minion.pem -pubout >> minion.pub`.
+  issue the CLI command `openssl rsa -in minion.pem -pubout >> minion.pub`.
 
 10. Go back to the virl_packet directory level and make copies of the following files:
 
-   LINUX AND MAC USERS - `cp variables.tf.orig variables.tf`, `cp passwords.tf.org passwords.tf`, `cp settings.tf.orig settings.tf`.
+  LINUX AND MAC USERS - `cp variables.tf.orig variables.tf`, `cp passwords.tf.org passwords.tf`, `cp settings.tf.orig settings.tf`.
  
-   WINDOWS USERS - `copy variables.tf.orig variables.tf`, `copy passwords.tf.org passwords.tf`, `copy settings.tf.orig settings.tf`.
+  WINDOWS USERS - `copy variables.tf.orig variables.tf`, `copy passwords.tf.org passwords.tf`, `copy settings.tf.orig settings.tf`.
 
 
 11. Edit the files 
-  1. `variables.tf` and alter salt_id so that it contains you VIRL license key file name (xxxxxxxx.virl.info, the 'xxxxxxxx' is your salt_id - DO NOT INCLUDE THE '.PEM' EXTENSION)
- WINDOWS USERS - you must change the 'ssh_private_key' default value so it reads "id_rsa".
+  1. `variables.tf` and alter salt_id so that it contains you VIRL license key file name (xxxxxxxx.virl.info, the 'xxxxxxxx' is your salt_id). WINDOWS USERS - you must also change the 'ssh_private_key' default value so it reads "id_rsa".
   2. `password.tf` adjust these to suit your needs (stick to numbers and letters for now please)
   3. `settings.tf` - replace the packet_api `default` field with your packet_api_key. You can also adjust the 'dead_mans_timer' value and the 'packet_machine_type' that will be used with the VIRL server is created.
 
