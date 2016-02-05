@@ -12,7 +12,7 @@ WINDOWS USERS -  Go to Control panel -> System -> Advanced System settings* -> E
 
 4. You need to generate an 'ssh key'. Depending on your operating system (Linux, Mac) you can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. 
 
-WINDOWS USERS - popular SSH clients will have a function to be able to generate an ssh key. Please create an SSHv2 RSA key. Do NOT set a passphrase during key generation. You may need to 'export' the key for use with OpenSSH. Place a copy of the PUBLIC KEY (id_rsa.pub) file into the virl_packet directory. 
+WINDOWS USERS - popular SSH clients will have a function to be able to generate an ssh key. Please create an SSHv2 RSA key. Do NOT set a passphrase during key generation. The system requires the key to be compatible with OpenSSH. Some utilities provide a function to 'export' the key for use with OpenSSH. Place a copy of the PRIVATE KEY (id_rsa) and the PUBLIC KEY (id_rsa.pub) into the virl_packet directory. 
 
 LINUX AND MAC USER - set the permissions on the id_rsa.pub file using the command `chmod 755 id_rsa.pub`.
 
@@ -40,7 +40,7 @@ LINUX AND MAC USER - set the permissions on the id_rsa.pub file using the comman
 
 11. Edit the files 
   1. `variables.tf` and alter salt_id so that it contains you VIRL license key file name (xxxxxxxx.virl.info, the 'xxxxxxxx' is your salt_id - DO NOT INCLUDE THE '.PEM' EXTENSION)
-     WINDOWS USERS - edit the 'ssh_private_key' default value so it reads `"id_rsa"`.
+ WINDOWS USERS - you must change the 'ssh_private_key' default value so it reads "id_rsa".
   2. `password.tf` adjust these to suit your needs (stick to numbers and letters for now please)
   3. `settings.tf` - replace the packet_api `default` field with your packet_api_key. You can also adjust the 'dead_mans_timer' value and the 'packet_machine_type' that will be used with the VIRL server is created.
 
