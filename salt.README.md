@@ -16,7 +16,7 @@
 
 5. edit `passwords.tf` Note: The salt state (virl.terraform) will generate new passwords for you. You adjust these to suit your needs. If the salt state is run again, new passwords will be generated, overwriting any values you have applied.
 
-6. Edit `settings.tf` to replace the `default` field with your packet_api_key. You can also adjust the 'dead_mans_timer' value and the 'packet_machine_type' that will be used with the VIRL server is created.
+6. Edit `settings.tf`. Replace the packet_api `default` field with your packet_api_key. You can also adjust the 'dead_mans_timer' value and the 'packet_machine_type' that will be used with the VIRL server is created.
 
 7. Run the command 
 
