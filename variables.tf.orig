@@ -15,11 +15,6 @@ variable "hostname" {
 	default = "virltest"
 }
 
-variable "packet_machine_type" {
-	description = "set to either baremetal_1 or barebetal_3"
-	default = "baremetal_1"
-}
-
 variable "openvpn_enable" {
 	description = "want openvpn enabled"
 	default = "True"
