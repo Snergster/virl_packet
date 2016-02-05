@@ -16,17 +16,15 @@
 
 5. edit `passwords.tf` Note: The salt state will generate new keys with each run
 
-6. Edit `settings.tf` to replace the `default` field with your packet_api_key 
+6. Edit `settings.tf` to replace the `default` field with your packet_api_key. You can also adjust the 'dead_mans_timer' value and the 'packet_machine_type' that will be used with the VIRL server is created.
 
-7. Edit `variables.tf` and edit the `packet_machine_type` default field to select the machine type (size) that you want
-
-8. Run the command 
+7. Run the command 
 
    `terraform plan .`
    
    This will validate the terraform .tf file.
    
-9. Run the command 
+8. Run the command 
 
    `terraform apply .`     
    
@@ -36,18 +34,18 @@
     
     NOTE - the VIRL server will reboot once the VIRL software has been installed. You must therefore wait until the reboot has completed before logging in.
 
-10. To see more information about your Remote VIRL server, run the command 
+9. To see more information about your Remote VIRL server, run the command 
 
    `terraform show` 
    
    The output will provided details of your Remote VIRL server instance.
 
 
-11. If logged in as `root`, to run commands such as 'nova service-list' you need to be operating as the virl user. To do this, use the command
+10. If logged in as `root`, to run commands such as 'nova service-list' you need to be operating as the virl user. To do this, use the command
  
     `su -l virl`
 
-12. The VIRL server is provisioned in a secure manner. To access the server, you must establish an OpenVPN tunnel to the server.
+11. The VIRL server is provisioned in a secure manner. To access the server, you must establish an OpenVPN tunnel to the server.
     1. Install an OpenVPN client for your system.
     2. The set up of the remote VIRL server will automatically configure the OpenVPN server. The 'client.ovpn' connection profile will be automatically downloaded to the directory from which you ran the `terraform apply .` command. 
     3. The 'client.ovpn' file can be copied out to other devices, such as a laptop hosting your local VIRL instance.
@@ -55,14 +53,14 @@
    
     NOTE - the VIRL server will reboot once the VIRL software has been installed. You must therefore wait until the reboot has completed before bringing up the OpenVPN tunnel.
     
-13. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.1.254.
+12. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.1.254.
     If using VM Maestro, you must set up the connection profile to point to `172.16.1.254`
 
-14. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
+13. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
  
     `terraform destroy .`
 
-To start up again, repeat step 8.
+To start up again, repeat step 7.
 
 [NOTE] Your uwmadmin and guest passwords are in passwords.tf. If you can't remember them, this is where you can find them, or by running terraform output
  
