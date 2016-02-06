@@ -10,7 +10,7 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' DIRECTLY FROM THEIR 
 
 3. Once the Git clone operation is complete, go into the directory called 'virl_packet' (or virl_packet.git).
 
-4. You MAY need to generate an 'ssh key'. If you already have one, you can skip this step. Depending on your operating system (Linux, Mac) you can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. 
+4. You MAY need to generate an 'ssh key'. If you already have one, you can skip this step as long as you have NOT set a passphrase on the key. Depending on your operating system (Linux, Mac) you can do this using the command `ssh-keygen -t rsa`. Do NOT set a passphrase during key generation. To remove a passphrase from an existing key, use the command `ssh-keygen -p` and follow the prompts.
 
   WINDOWS USERS - popular SSH clients will have a function to be able to generate an ssh key. Please create an SSHv2 RSA key. Do NOT set a passphrase during key generation. The system requires the key to be compatible with OpenSSH. Some utilities provide a function to 'export' the key for use with OpenSSH. Place a copy of the PRIVATE KEY (id_rsa) and the PUBLIC KEY (id_rsa.pub) into the virl_packet directory. 
 
