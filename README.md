@@ -89,5 +89,7 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' DIRECTLY FROM THEIR 
 
 To start up again, repeat step 12.
 
+[NOTE] - if your VIRL server bring-up fails, destroy the instance using the command above and restart from step 12.
+
 [NOTE] Your uwmadmin and guest passwords are in passwords.tf. If you can't remember them, this is where you can find them, or by running terraform output
  
