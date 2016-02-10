@@ -33,9 +33,9 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' DIRECTLY FROM THEIR 
 
 10. Go back to the virl_packet directory level and make copies of the following files:
 
-  LINUX AND MAC USERS - `cp variables.tf.orig variables.tf`, `cp passwords.tf.org passwords.tf`, `cp settings.tf.orig settings.tf`.
+  LINUX AND MAC USERS - `cp variables.tf.orig variables.tf`, `cp passwords.tf.orig passwords.tf`, `cp settings.tf.orig settings.tf`.
  
-  WINDOWS USERS - `copy variables.tf.orig variables.tf`, `copy passwords.tf.org passwords.tf`, `copy settings.tf.orig settings.tf`.
+  WINDOWS USERS - `copy variables.tf.orig variables.tf`, `copy passwords.tf.orig passwords.tf`, `copy settings.tf.orig settings.tf`.
 
 
 11. Edit the files 
