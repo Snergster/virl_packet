@@ -56,8 +56,8 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' FROM THEIR VIRL SERV
    
     NOTE - the VIRL server will reboot once the VIRL software has been installed. You must therefore wait until the reboot has completed before bringing up the OpenVPN tunnel.
     
-12. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.1.254.
-    If using VM Maestro, you must set up the connection profile to point to `172.16.1.254`
+12. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.11.254.
+    If using VM Maestro, you must set up the connection profile to point to `172.16.11.254`
 
 13. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
  
