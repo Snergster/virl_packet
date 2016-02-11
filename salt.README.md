@@ -5,6 +5,7 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' FROM THEIR VIRL SERV
 1. On your local VIRL server, run the commands
 
    `sudo vinstall salt`
+   
    `sudo salt-call state.sls virl.terraform`
    
    This will install terraform, clone the repo, create an ssh key, copy in minion keys and replace many variables in the variables.tf file.
