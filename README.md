@@ -4,7 +4,9 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' DIRECTLY FROM THEIR 
 
 1. Install terraform.io for your operating system. This is available from https://www.terraform.io/downloads.html.  Extract the .zip file into a directory. You must make sure that the directory is then part of your 'path' environment, meaning that you can issue the command 'terraform' from the command line and it provides output. For instructions, please refer to https://www.terraform.io/intro/getting-started/install.html
 
-  WINDOWS USERS -  Go to Control panel -> System -> Advanced System settings* -> Environment Variables -> . Scroll down in system variables until you find PATH. Click 'edit' and change accordingly. BE SURE to include a semicolon at the end of the previous as that is the delimiter ie c:\path;c:\path2. You will need to launch a new command window for the settings to take effect.
+WINDOWS USERS - Extract terraform to a directory under 'Program Files'.
+
+WINDOWS USERS -  Go to Control panel -> System -> Advanced System settings* -> Environment Variables -> . Scroll down in system variables until you find PATH. Click 'edit' and change accordingly. BE SURE to include a semicolon at the end of the previous as that is the delimiter ie c:\path;c:\Program Files\terraform. You will need to launch a new command window for the settings to take effect.
 
 2. Install a Git client of your choice then 'clone' the repo at `https://github.com/Snergster/virl_packet.git`.
 
@@ -16,7 +18,7 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' DIRECTLY FROM THEIR 
 
   LINUX AND MAC USER - set the permissions on the id_rsa.pub file using the command `chmod 755 id_rsa.pub`.
 
-5. WINDOWS USERS - you must also install OpenSSL. This is available from `https://code.google.com/archive/p/openssl-for-windows/downloads`. Please install and add the 'bin' directory to your path. For example `"C:\Program Files (x86)\openssl\bin"`. See instructions at step 1 for details on how to modify your path.
+5. WINDOWS USERS - you must also install OpenSSL. This is available from `https://code.google.com/archive/p/openssl-for-windows/downloads`. Please install into a directory under 'Program Files' and add the 'openssl\bin' directory to your path. For example `"C:\Program Files\openssl\bin"`. See instructions at step 1 for details on how to modify your path.
 
 6. register packet.net account
   1. Create api key token
