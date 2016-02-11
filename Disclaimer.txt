@@ -9,9 +9,29 @@ The customer is responsible for ensuring that they terminate their VIRL server i
 
 If the customer forgets to terminate their instance, the customer is responsible for the settlement of any and all associated costs with Packet.net.
 
-Neither Cisco nor Packet can be held accountable should the customer forget to terminate their server instance, and in so doing, incurring additional unexpected charges.
+Neither Cisco nor Packet can be held accountable should the customer forget to terminate their server instance, and in so doing, incur additional unexpected charges.
 
 Please see https://www.packet.net/bare-metal/ for details of Packet's service fees.
+
+Dead man's timer:
+-----------------
+When a VIRL server is initialised, a 'dead man's timer' value is set. The purpose of the timer is to avoid a server instance being left running on the platform for an indefinite period. 
+
+The timer value is set by default to four (4) hours and can be changed by modifying the 'dead mans timer' value in the settings.tf file before you start your server instance. The value you set will be applied each time you start up a server instance until you next modify the value.
+
+If your server is running at the point where the timer expires, your server instance will be terminated automatically. Any information held on the server will be lost.
+
+You are able to see when the timer will expire by logging in (via ssh) to the server instance and issuing the command `sudo atq`. You can remove the timer, leaving the server to run indefinitely, by issuing the command `sudo atrm 1`.
+
+Cisco cannot be held accountable should the customer forget to adjust the 'dead man's timer', and in so doing, encounter a server termination event.
+
+Neither Cisco nor Packet can be held accountable should the customer forget to terminate their server instance, and in so doing, incur additional unexpected charges.
+
+Server instance termination:
+----------------------------
+Users are able to terminate their server instance on Packet by issuing the command `terraform destroy .`. Although the command may report 'success', users are advised to log in to the Packet.net portal and confirm that their server instance has indeed been terminated. If the server instance is still present, the server instance can be terminated via operations on the Packet.net portal.
+
+Neither Cisco nor Packet can be held accountable should the customer forget to terminate their server instance, and in so doing, incur additional unexpected charges.
 
 Support:
 --------
