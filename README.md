@@ -41,7 +41,8 @@ WINDOWS USERS -  Go to Control panel -> System -> Advanced System settings* -> E
 
 
 11. Edit the files 
-  1. `variables.tf` and alter salt_id so that it contains you VIRL license key file name (xxxxxxxx.virl.info, the 'xxxxxxxx' is your salt_id). WINDOWS USERS - you must also change the 'ssh_private_key' default value so it reads "id_rsa".
+  1. `variables.tf` and alter salt_id so that it contains you VIRL license key file name (xxxxxxxx.virl.info, the 'xxxxxxxx' is your salt_id). 
+   WINDOWS USERS - you must also change the 'ssh_private_key' default value so it reads "id_rsa".
   2. `password.tf` adjust these to suit your needs (stick to numbers and letters for now please)
   3. `settings.tf` - replace the packet_api `default` field with your packet_api_key. You can also adjust the 'dead_mans_timer' value and the 'packet_machine_type' that will be used with the VIRL server is created.
 
