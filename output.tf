@@ -14,5 +14,5 @@
         value = "Your OpenVPN client connection file is now available at ./client.ovpn"
     }
     output "uwm over OpenVPN" {
-      value = "http://172.16.1.254:19400"    
+      value = "http://172.16.11.254:19400"    
     }
