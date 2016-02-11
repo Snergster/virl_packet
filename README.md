@@ -87,9 +87,34 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' DIRECTLY FROM THEIR 
  
     `terraform destroy .`
 
+19. Log in to the Packet.net portal
+   1. Review the 'Manage' tab to confirm that the server instance has indeed been deleted and if necessary, delete the server
+   2. Review the 'SSH Keys' tab and remove any ssh keys that are registered
+
 To start up again, repeat step 12.
 
-[NOTE] - if your VIRL server bring-up fails, destroy the instance using the command above and restart from step 12.
+[NOTE] Your uwmadmin and guest passwords are in passwords.tf. If you can't remember them, this is where you can find them, or by running the command `terraform show`.
 
-[NOTE] Your uwmadmin and guest passwords are in passwords.tf. If you can't remember them, this is where you can find them, or by running terraform output
+# If your VIRL server bring-up fails to complete successfully:
+
+1. Terminate the instance using the command:
+
+   `terraform destroy .`
+
+2. Log in to the Packet.net portal
+   1. Review the 'Manage' tab to confirm that the server instance has indeed been deleted and if necessary, delete the server.
+   2. Review the 'SSH Keys' tab and remove any ssh keys that are registered
+    
+   [NOTE] a server can only be terminated on the Packet.net portal once the server's status is reported as 'green'. You may therefore need to wait for a few minutes in order for the server to reach this state.
+
+# Dead man's timer:
+
+When a VIRL server is initialised, a 'dead man's timer' value is set. The purpose of the timer is to avoid a server instance being left running on the platform for an indefinite period. 
+
+The timer value is set by default to four (4) hours and can be changed by modifying the 'dead mans timer' value in the settings.tf file before you start your server instance. The value you set will be applied each time you start up a server instance until you next modify the value.
+
+If your server is running at the point where the timer expires, your server instance will be terminated automatically. Any information held on the server will be lost.
+
+You are able to see when the timer will expire by logging in (via ssh) to the server instance and issuing the command `sudo atq`. You can remove the timer, leaving the server to run indefinitely, by issuing the command `sudo atrm 1`.
+
  
