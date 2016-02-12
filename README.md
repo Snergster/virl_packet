@@ -1,5 +1,7 @@
 THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' DIRECTLY FROM THEIR WORKSTATION/LAPTOP. YOU MUST HAVE A VALID VIRL LICENSE KEY. IF YOU WISH TO RUN 'VIRL on PACKET' FROM YOUR VIRL SERVER, PLEASE READ THE 'salt.README.md' FILE.
 
+THIS IS A WORK IN PROGRESS AND THEREFORE MUST BE TREATED WITH CAUTION
+
 #Steps:
 
 1. Install terraform.io for your operating system. This is available from https://www.terraform.io/downloads.html.  Extract the .zip file into a directory. You must make sure that the directory is then part of your 'path' environment, meaning that you can issue the command 'terraform' from the command line and it provides output. For instructions, please refer to https://www.terraform.io/intro/getting-started/install.html
