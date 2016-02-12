@@ -31,7 +31,7 @@ WINDOWS USERS -  Go to Control panel -> System -> Advanced System settings* -> E
 
 9. You now need to generate a .pub key from your .pem file.
 
-  issue the CLI command `openssl rsa -in minion.pem -pubout > minion.pub`.
+  issue the CLI command `openssl rsa -in minion.pem -outform PEM -pubout -out minion.pub`.
 
 10. Go back to the virl_packet directory level and make copies of the following files:
 
