@@ -109,6 +109,7 @@ To start up again, repeat step 12.
 2. Log in to the Packet.net portal
    1. Review the 'Manage' tab to confirm that the server instance has indeed been deleted and if necessary, delete the server.
    2. Review the 'SSH Keys' tab and remove any ssh keys that are registered
+   3. Delete any project that is does not have an active server instance in it. Double-click on the project name and use the 'settings' panel to delete the project.
     
    [NOTE] a server can only be terminated on the Packet.net portal once the server's status is reported as 'green'. You may therefore need to wait for a few minutes in order for the server to reach this state.
 
