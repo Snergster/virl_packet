@@ -58,7 +58,7 @@ resource "packet_device" "virl" {
 
    provisioner "remote-exec" {
       inline = [
-         "apt-get install crudini -y",
+         "apt-get install crudini at -y",
          "printf '\nmaster: ${var.salt_master}\nid: ${var.salt_id}\nappend_domain: ${var.salt_domain}\n' >>/etc/salt/minion.d/extra.conf",
          "crudini --set /etc/virl.ini DEFAULT salt_id ${var.salt_id}",
          "crudini --set /etc/virl.ini DEFAULT salt_master ${var.salt_master}",
