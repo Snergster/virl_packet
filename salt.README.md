@@ -6,6 +6,8 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' FROM THEIR VIRL SERV
 
    `sudo vinstall salt`
    
+   `sudo apt-get install -y pwgen`
+   
    `sudo salt-call state.sls virl.terraform`
    
    This will install terraform, clone the repo, create an ssh key, copy in minion keys and replace many variables in the variables.tf file.
@@ -21,13 +23,19 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' FROM THEIR VIRL SERV
 
 6. Edit `settings.tf`. Replace the packet_api `default` field with your packet_api_key. You can also adjust the 'dead_mans_timer' value and the 'packet_machine_type' that will be used with the VIRL server is created.
 
-7. Run the command 
+7. Before bringing up your VIRL server, log into to app.packet.net and click 'Manage'. You need to ensure that there are no active projects present. If there are active projects:
+
+    1. Click on the name of your project listed
+    2. Select "Settings" tab
+    3. Scroll to the bottom of the page and click on the button to delete the project
+
+8. Run the command 
 
    `terraform plan .`
    
    This will validate the terraform .tf file.
    
-8. Run the command 
+9. Run the command 
 
    `terraform apply .`     
    
@@ -37,18 +45,18 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' FROM THEIR VIRL SERV
     
     NOTE - the VIRL server will reboot once the VIRL software has been installed. You must therefore wait until the reboot has completed before logging in.
 
-9. To see more information about your Remote VIRL server, run the command 
+10. To see more information about your Remote VIRL server, run the command 
 
    `terraform show` 
    
    The output will provided details of your Remote VIRL server instance.
 
 
-10. If logged in as `root`, to run commands such as 'nova service-list' you need to be operating as the virl user. To do this, use the command
+11. If logged in as `root`, to run commands such as 'nova service-list' you need to be operating as the virl user. To do this, use the command
  
     `su -l virl`
 
-11. The VIRL server is provisioned in a secure manner. To access the server, you must establish an OpenVPN tunnel to the server.
+12. The VIRL server is provisioned in a secure manner. To access the server, you must establish an OpenVPN tunnel to the server.
     1. Install an OpenVPN client for your system.
     2. The set up of the remote VIRL server will automatically configure the OpenVPN server. The 'client.ovpn' connection profile will be automatically downloaded to the directory from which you ran the `terraform apply .` command. 
     3. The 'client.ovpn' file can be copied out to other devices, such as a laptop hosting your local VIRL instance.
@@ -56,14 +64,14 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' FROM THEIR VIRL SERV
    
     NOTE - the VIRL server will reboot once the VIRL software has been installed. You must therefore wait until the reboot has completed before bringing up the OpenVPN tunnel.
     
-12. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.11.254.
+13. With your OpenVPN tunnel up, the VIRL server is available at http://172.16.11.254.
     If using VM Maestro, you must set up the connection profile to point to `172.16.11.254`
 
-13. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
+14. When you're ready to terminate your remote VIRL server instance, on your LOCAL VIRL server, issue the command 
  
     `terraform destroy .`
 
-14. Log in to the Packet.net portal
+15. Log in to the Packet.net portal
    1. Review the 'Manage' tab to confirm that the server instance has indeed been deleted and if necessary, delete the server
    2. Review the 'SSH Keys' tab and remove any ssh keys that are registered
 
