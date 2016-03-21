@@ -55,6 +55,10 @@ resource "packet_device" "virl" {
         source = "conf/extra.conf"
         destination = "/etc/salt/minion.d/extra.conf"
     }
+    provisioner "file" {
+        source = "conf/logging.conf"
+        destination = "/etc/salt/minion.d/logging.conf"
+    }
 
    provisioner "remote-exec" {
       inline = [
@@ -90,9 +94,11 @@ resource "packet_device" "virl" {
          "printf '/usr/bin/curl -H X-Auth-Token:${var.packet_api_key} -X DELETE https://api.packet.net/devices/${packet_device.virl.id}\n'>/etc/deadtimer",
          "sleep 3",
          "at now + ${var.dead_mans_timer} hours -f /etc/deadtimer",
-         "salt-call state.sls openstack",
+         "time salt-call state.sls openstack",
+         "echo '*****************************************OPENSTACK STATE COMPLETED******************************'",
          "/usr/local/bin/vinstall salt",
          "salt-call state.sls openstack.setup",
+         "echo '*****************************************OPENSTACK SETUP STATE COMPLETED******************************'",
          "salt-call state.sls common.bridge",
          "salt-call state.sls openstack.restart",
          "salt-call state.sls virl.std",
@@ -101,7 +107,9 @@ resource "packet_device" "virl" {
          "salt-call state.sls openstack.restart",
          "salt-call state.sls virl.routervms",
          "salt-call state.sls virl.openvpn",
+         "echo '*****************************************OPENVPN STATE COMPLETED******************************'",
          "salt-call state.sls virl.openvpn.packet",
+         "echo '*****************************************OPENVPN PACKET STATE COMPLETED******************************'",
     #This is to keep the sftp from failing and taking terraform out with it in case no vpn is actually installed
          "touch /var/local/virl/client.ovpn"
 
