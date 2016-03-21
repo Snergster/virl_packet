@@ -14,3 +14,5 @@ client.ovpn
 passwords.tf
 standalone.README.md
 settings.tf
+.bundle
+virl.tf.old
