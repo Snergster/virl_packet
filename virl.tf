@@ -106,6 +106,7 @@ resource "packet_device" "virl" {
          "salt-call state.sls virl.ank",
          "salt-call state.sls virl.guest",
          "salt-call state.sls openstack.restart",
+         "salt-call state.sls virl.ramdisk",
          "salt-call state.sls virl.routervms",
          "salt-call state.sls virl.openvpn",
          "echo '*****************************************OPENVPN STATE COMPLETED******************************'",
