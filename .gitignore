@@ -2,8 +2,8 @@
 *~
 id_rsa
 id_rsa.pub
-keys/minion.pem
-keys/minion.pub
+keys/*.pem
+keys/*.pub
 variables.tf
 conf/orig.extra.conf
 *.tfstate

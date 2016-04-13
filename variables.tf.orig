@@ -24,14 +24,3 @@ variable "ssh_private_key" {
 	description = "location of ssh private key that matches the public key you gave to packet"
 	default = "~/.ssh/id_rsa"
 }
-
-variable "salt_master" {
-	description = "Name or IP address of salt master. You really shouldnt change this at this point"
-	default = "ewr-packet-1.virl.info"
-}
-
-# By default we automatically create a new project each time, if you dont want this, insert project id and change the two variables highlighted in virl.tf
-variable "packet_project_id" {
-	description = "After you create packet project, get your api key, then get your ptoject id key with curl -H 'X-Auth-Token: putAPIkeyhere' https://api.packet.net/projects"
-    default = "bad_project_id"
-}
