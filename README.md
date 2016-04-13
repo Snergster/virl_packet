@@ -21,7 +21,7 @@ THIS DOCUMENT IS FOR USERS WHO WANT TO RUN 'VIRL on PACKET' FROM THEIR VIRL SERV
 
 5. edit `passwords.tf` Note: The salt state (virl.terraform) will generate new passwords for you. You adjust these to suit your needs but please stick to numbers and letters as the characters in the password. If the salt state is run again, new passwords will be generated, overwriting any values you have applied. 
 
-6. Edit `settings.tf`. Replace the packet_api `default` field with your packet_api_key. You can also adjust the 'dead_mans_timer' value and the 'packet_machine_type' that will be used with the VIRL server is created.
+6. Edit `settings.tf`. Replace the packet_api `default` field with your packet_api_key. You can also adjust the 'dead_mans_timer' value and the 'packet_machine_type' that will be used with the VIRL server is created. In addition, you can select where you want your VIRL server to be hosted from the available Packet.net data centers. EWR1 == New York, SJC1 == San Jose, CA, AMS1 == Amsterdam. Instructions in the `settings.tf` file will guide you to the changes that you need to make.
 
 7. Before bringing up your VIRL server, log into to app.packet.net and click 'Manage'. You need to ensure that there are no active projects present. If there are active projects:
 
