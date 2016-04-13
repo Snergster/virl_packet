@@ -14,12 +14,12 @@ variable "dead_mans_timer" {
 }
 
 variable "packet_location" {
-	description = "joel to fill in ewr1 ams1 or sjc1 details"
+	description = "Pick from available Packet.net data center locations: ewr1==New York, sjc1==San Jose,CA, ams1==Amsterdam"
 	default = "ewr1"
 }
 
 variable "salt_master" {
-	description = "Name or IP address of salt master. Replace with sjc-packet-1.virl.info or ams-packet-1.virl.info if needed"
+	description = "Name or IP address of salt master. Replace with sjc-packet-1.virl.info or ams-packet-1.virl.info if using one of the other Packet.net locations"
 	default = "ewr-packet-1.virl.info"
 }
 
