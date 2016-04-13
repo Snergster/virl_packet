@@ -19,7 +19,7 @@ variable "packet_location" {
 }
 
 variable "salt_master" {
-	description = "Name or IP address of salt master. Replace with sjc-packet-1.virl.info or ams-packet-1.virl.info if using one of the other Packet.net locations"
+	description = "Name of salt master. Replace with sjc-packet-1.virl.info or ams-packet-1.virl.info if using one of the other Packet.net locations"
 	default = "ewr-packet-1.virl.info"
 }
 
