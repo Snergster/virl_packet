@@ -60,10 +60,9 @@ resource "packet_device" "virl" {
         destination = "/etc/salt/minion.d/logging.conf"
     }
     provisioner "file" {
-        source = "conf/ubuntu-default.list"
-        destination = "/etc/apt/sources.list.d/ubuntu-default.list"
-    }
-
+        source = "conf/ubuntu-default.list"
+        destination = "/etc/apt/sources.list.d/ubuntu-default.list"
+    }
    provisioner "remote-exec" {
       inline = [
          "apt-get install crudini at -y",
