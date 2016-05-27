@@ -86,7 +86,7 @@ resource "packet_device" "virl" {
          "set -e",
          "set -x",
          "wget -O install_salt.sh https://bootstrap.saltstack.com",
-         "sh ./install_salt.sh -X -P stable",
+         "sh ./install_salt.sh -X -P stable 2015.8",
     # create virl user
          "salt-call state.sls common.users",
     # copy authorized keys from root to virl user
