@@ -23,7 +23,7 @@ resource "packet_device" "virl" {
         project_id = "${packet_project.virl_project.id}"
         depends_on = ["packet_ssh_key.virlkey","packet_project.virl_project"]
 
-# Alternate project_id. If you use a consistent project defined in variables.tf, uncomment the line below. Remember to comment out the two lines above!
+# Alternate project_id. If you use a consistent project defined in settings.tf, uncomment the two lines below. Remember to comment out the two lines above!
 # Only have one project_id and depends_on defined at a time
         #project_id = "${var.packet_project_id}"
         #depends_on = ["packet_ssh_key.virlkey"]
