@@ -39,6 +39,15 @@ resource "packet_device" "virl" {
 
    provisioner "remote-exec" {
       inline = [
+    # dead mans timer
+        "apt-get install at -y",
+        "printf '/usr/bin/curl -H X-Auth-Token:${var.packet_api_key} -X DELETE https://api.packet.net/devices/${packet_device.virl.id}\n'>/etc/deadtimer",
+        "sleep 3",
+        "at now + ${var.dead_mans_timer} hours -f /etc/deadtimer"
+    ]
+    }
+   provisioner "remote-exec" {
+      inline = [
         "mkdir -p /etc/salt/minion.d",
         "mkdir -p /etc/salt/pki/minion"
     ]
@@ -93,10 +102,6 @@ resource "packet_device" "virl" {
          "salt-call state.sls virl.packet.keycopy",
          "salt-call state.highstate",
          "salt-call state.sls virl.basics",
-    # dead mans timer
-         "printf '/usr/bin/curl -H X-Auth-Token:${var.packet_api_key} -X DELETE https://api.packet.net/devices/${packet_device.virl.id}\n'>/etc/deadtimer",
-         "sleep 3",
-         "at now + ${var.dead_mans_timer} hours -f /etc/deadtimer",
          "time salt-call -l info state.sls openstack",
          "echo '*****************************************OPENSTACK STATE COMPLETED******************************'",
          "/usr/local/bin/vinstall salt",
