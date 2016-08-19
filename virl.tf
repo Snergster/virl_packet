@@ -18,7 +18,7 @@ resource "packet_device" "virl" {
         hostname = "${var.hostname}"
         plan = "${var.packet_machine_type}"
         facility = "${var.packet_location}"
-        operating_system = "ubuntu_14_04"
+        operating_system = "ubuntu_14_04_image"
         billing_cycle = "hourly"
         project_id = "${packet_project.virl_project.id}"
         depends_on = ["packet_ssh_key.virlkey","packet_project.virl_project"]
@@ -40,7 +40,8 @@ resource "packet_device" "virl" {
    provisioner "remote-exec" {
       inline = [
     # dead mans timer
-        "apt-get install at -y",
+        "apt-get update",
+        "apt-get install at time -y",
         "printf '/usr/bin/curl -H X-Auth-Token:${var.packet_api_key} -X DELETE https://api.packet.net/devices/${packet_device.virl.id}\n'>/etc/deadtimer",
         "sleep 3",
         "at now + ${var.dead_mans_timer} hours -f /etc/deadtimer"
@@ -95,7 +96,7 @@ resource "packet_device" "virl" {
          "set -e",
          "set -x",
          "wget -O install_salt.sh https://bootstrap.saltstack.com",
-         "sh ./install_salt.sh -X -P stable 2015.8",
+         "sh ./install_salt.sh -X -P stable",
     # create virl user
          "salt-call state.sls common.users",
     # copy authorized keys from root to virl user
