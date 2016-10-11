@@ -34,7 +34,7 @@ resource "packet_device" "virl" {
         user = "root"
         port = 22
         timeout = "1200"
-        private_key = "${var.ssh_private_key}"
+        private_key = "${file("${var.ssh_private_key}")}"
       }
 
    provisioner "remote-exec" {
