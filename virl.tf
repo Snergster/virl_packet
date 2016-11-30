@@ -18,7 +18,7 @@ resource "packet_device" "virl" {
         hostname = "${var.hostname}"
         plan = "${var.packet_machine_type}"
         facility = "${var.packet_location}"
-        operating_system = "ubuntu_14_04_image"
+        operating_system = "ubuntu_16_04_image"
         billing_cycle = "hourly"
         project_id = "${packet_project.virl_project.id}"
         depends_on = ["packet_ssh_key.virlkey","packet_project.virl_project"]
@@ -66,6 +66,10 @@ resource "packet_device" "virl" {
         destination = "/etc/salt/minion.d/extra.conf"
     }
     provisioner "file" {
+        source = "conf/install_salt.sh"
+        destination = "/root/install_salt.sh"
+    }
+    provisioner "file" {
         source = "conf/logging.conf"
         destination = "/etc/salt/minion.d/logging.conf"
     }
@@ -76,6 +80,7 @@ resource "packet_device" "virl" {
    provisioner "remote-exec" {
       inline = [
          "apt-get install crudini at -y",
+         "service atd start",
          "printf '\nmaster: ${var.salt_master}\nid: ${var.salt_id}\nappend_domain: ${var.salt_domain}\n' >>/etc/salt/minion.d/extra.conf",
          "crudini --set /etc/virl.ini DEFAULT salt_id ${var.salt_id}",
          "crudini --set /etc/virl.ini DEFAULT salt_master ${var.salt_master}",
@@ -95,15 +100,28 @@ resource "packet_device" "virl" {
       inline = [
          "set -e",
          "set -x",
-         "wget -O install_salt.sh https://bootstrap.saltstack.com",
+         "apt-get install openssh-server build-essential python-dev git ntp traceroute ntpdate zile curl traceroute unzip at swig libssl-dev sshpass crudini debconf-utils dkms qemu-kvm gcc cpu-checker openssl apt-show-versions htop apache2 libapache2-mod-wsgi mtools socat crudini telnet -y",
+         "echo '*****************************************PRESALT STATE COMPLETED******************************'",
+         "sleep 1 || true",
+         "echo 'wget -O install_salt.sh https://bootstrap.saltstack.com'",
+         "echo '*****************************************PRESALT STATE COMPLETED******************************'",
+         "sleep 6 || true",
          "sh ./install_salt.sh -X -P stable",
     # create virl user
          "salt-call state.sls common.users",
     # copy authorized keys from root to virl user
+         "salt-call grains.setval mitaka true",
+         "salt-call grains.setval mysql_password ${var.mysql_password}",
+         "salt-call file.write /etc/salt/minion.d/openstack.conf 'mysql.pass: ${var.mysql_password}'",
          "salt-call state.sls virl.packet.keycopy",
          "salt-call state.highstate",
          "salt-call state.sls virl.basics",
+         "salt-call state.sls --state-output=changes common.submaster.getip",
+         "echo '*****************************************BASICS STATE COMPLETED******************************'",
+         "sleep 6 || true",
          "time salt-call -l info state.sls openstack",
+         "salt-call state.sls openstack.restart",
+         "salt-call state.sls openstack.neutron",
          "echo '*****************************************OPENSTACK STATE COMPLETED******************************'",
          "/usr/local/bin/vinstall salt",
          "salt-call state.sls openstack.keystone.apache2",
