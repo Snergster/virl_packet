@@ -77,8 +77,17 @@ resource "packet_device" "virl" {
         source = "conf/ubuntu-default.list"
         destination = "/etc/apt/sources.list.d/ubuntu-default.list"
     }
+    provisioner "file" {
+        source = "conf/${var.packet_location}.sources.list"
+        destination = "/etc/apt/sources.list"
+    }
+    provisioner "file" {
+        source = "conf/apt.conf"
+        destination = "/etc/apt/apt.conf"
+    }
    provisioner "remote-exec" {
       inline = [
+         "apt-get update -qq",
          "apt-get install crudini at -y",
          "service atd start",
          "printf '\nmaster: ${var.salt_master}\nid: ${var.salt_id}\nappend_domain: ${var.salt_domain}\n' >>/etc/salt/minion.d/extra.conf",
