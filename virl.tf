@@ -21,6 +21,7 @@ resource "packet_device" "virl" {
         operating_system = "ubuntu_16_04_image"
         billing_cycle = "hourly"
         project_id = "${packet_project.virl_project.id}"
+        user_data = "${file("conf/${var.packet_location}-cloud.config")}"
         depends_on = ["packet_ssh_key.virlkey","packet_project.virl_project"]
 
 # Alternate project_id. If you use a consistent project defined in settings.tf, uncomment the two lines below. Remember to comment out the two lines above!
@@ -74,14 +75,6 @@ resource "packet_device" "virl" {
         destination = "/etc/salt/minion.d/logging.conf"
     }
     provisioner "file" {
-        source = "conf/ubuntu-default.list"
-        destination = "/etc/apt/sources.list.d/ubuntu-default.list"
-    }
-    provisioner "file" {
-        source = "conf/${var.packet_location}.sources.list"
-        destination = "/etc/apt/sources.list"
-    }
-    provisioner "file" {
         source = "conf/apt.conf"
         destination = "/etc/apt/apt.conf"
     }
@@ -109,12 +102,12 @@ resource "packet_device" "virl" {
       inline = [
          "set -e",
          "set -x",
-         "apt-get install openssh-server build-essential python-dev git ntp traceroute ntpdate zile curl traceroute unzip at swig libssl-dev sshpass crudini debconf-utils dkms qemu-kvm gcc cpu-checker openssl apt-show-versions htop apache2 libapache2-mod-wsgi mtools socat crudini telnet -y",
+         "apt-get install openssh-server  python-dev ntp traceroute ntpdate zile curl traceroute unzip swig sshpass crudini debconf-utils dkms qemu-kvm gcc cpu-checker openssl apt-show-versions htop apache2 libapache2-mod-wsgi mtools socat crudini telnet -y",
          "echo '*****************************************PRESALT STATE COMPLETED******************************'",
          "sleep 1 || true",
          "echo 'wget -O install_salt.sh https://bootstrap.saltstack.com'",
          "echo '*****************************************PRESALT STATE COMPLETED******************************'",
-         "sleep 6 || true",
+         "sleep 1 || true",
          "sh ./install_salt.sh -X -P stable",
     # create virl user
          "salt-call state.sls common.users",
@@ -127,26 +120,27 @@ resource "packet_device" "virl" {
          "salt-call state.sls virl.basics",
          "salt-call state.sls --state-output=changes common.submaster.getip",
          "echo '*****************************************BASICS STATE COMPLETED******************************'",
-         "sleep 6 || true",
-         "time salt-call -l info state.sls openstack",
+         "sleep 1 || true",
+         "time salt-call state.sls openstack",
          "salt-call state.sls openstack.restart",
-         "salt-call state.sls openstack.neutron",
+         "echo 'salt-call state.sls openstack.neutron'",
          "echo '*****************************************OPENSTACK STATE COMPLETED******************************'",
          "/usr/local/bin/vinstall salt",
-         "salt-call state.sls openstack.keystone.apache2",
+         "echo 'salt-call state.sls openstack.keystone.apache2'",
          "salt-call state.sls openstack.setup",
          "echo '*****************************************OPENSTACK SETUP STATE COMPLETED******************************'",
          "salt-call state.sls common.bridge",
          "salt-call state.sls openstack.restart",
          "salt-call state.sls virl.std",
          "salt-call state.sls virl.ank",
+         "service virl-std restart",
+         "service virl-uwm restart",
          "salt-call state.sls virl.guest",
-         "salt-call state.sls openstack.restart",
          "salt-call state.sls virl.ramdisk",
          "salt-call state.sls virl.routervms",
          "salt-call state.sls virl.openvpn",
          "echo '*****************************************OPENVPN STATE COMPLETED******************************'",
-         "salt-call -l info state.sls virl.openvpn.packet",
+         "salt-call state.sls virl.openvpn.packet",
          "echo '*****************************************OPENVPN PACKET STATE COMPLETED******************************'",
     #This is to keep the sftp from failing and taking terraform out with it in case no vpn is actually installed
          "touch /var/local/virl/client.ovpn"
