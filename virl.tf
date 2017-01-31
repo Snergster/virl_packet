@@ -18,9 +18,10 @@ resource "packet_device" "virl" {
         hostname = "${var.hostname}"
         plan = "${var.packet_machine_type}"
         facility = "${var.packet_location}"
-        operating_system = "ubuntu_14_04_image"
+        operating_system = "ubuntu_16_04_image"
         billing_cycle = "hourly"
         project_id = "${packet_project.virl_project.id}"
+        user_data = "${file("conf/${var.packet_location}-cloud.config")}"
         depends_on = ["packet_ssh_key.virlkey","packet_project.virl_project"]
 
 # Alternate project_id. If you use a consistent project defined in settings.tf, uncomment the two lines below. Remember to comment out the two lines above!
@@ -66,16 +67,22 @@ resource "packet_device" "virl" {
         destination = "/etc/salt/minion.d/extra.conf"
     }
     provisioner "file" {
+        source = "conf/install_salt.sh"
+        destination = "/root/install_salt.sh"
+    }
+    provisioner "file" {
         source = "conf/logging.conf"
         destination = "/etc/salt/minion.d/logging.conf"
     }
     provisioner "file" {
-        source = "conf/ubuntu-default.list"
-        destination = "/etc/apt/sources.list.d/ubuntu-default.list"
+        source = "conf/apt.conf"
+        destination = "/etc/apt/apt.conf"
     }
    provisioner "remote-exec" {
       inline = [
+         "apt-get update -qq",
          "apt-get install crudini at -y",
+         "service atd start",
          "printf '\nmaster: ${var.salt_master}\nid: ${var.salt_id}\nappend_domain: ${var.salt_domain}\n' >>/etc/salt/minion.d/extra.conf",
          "crudini --set /etc/virl.ini DEFAULT salt_id ${var.salt_id}",
          "crudini --set /etc/virl.ini DEFAULT salt_master ${var.salt_master}",
@@ -95,37 +102,43 @@ resource "packet_device" "virl" {
       inline = [
          "set -e",
          "set -x",
-         "wget -O install_salt.sh https://bootstrap.saltstack.com",
+         "apt-get install openssh-server  python-dev ntp traceroute ntpdate zile curl traceroute unzip swig sshpass crudini debconf-utils dkms qemu-kvm gcc cpu-checker openssl apt-show-versions htop apache2 libapache2-mod-wsgi mtools socat crudini telnet -y",
+         "echo '*****************************************PRESALT STATE COMPLETED******************************'",
+         "sleep 1 || true",
+         "echo 'wget -O install_salt.sh https://bootstrap.saltstack.com'",
+         "echo '*****************************************PRESALT STATE COMPLETED******************************'",
+         "sleep 1 || true",
          "sh ./install_salt.sh -X -P stable",
     # create virl user
          "salt-call state.sls common.users",
     # copy authorized keys from root to virl user
+         "salt-call grains.setval mitaka true",
+         "salt-call grains.setval mysql_password ${var.mysql_password}",
+         "salt-call file.write /etc/salt/minion.d/openstack.conf 'mysql.pass: ${var.mysql_password}'",
          "salt-call state.sls virl.packet.keycopy",
          "salt-call state.highstate",
          "salt-call state.sls virl.basics",
-         "echo '*****************************************OPENSTACK STATE BEFORE******************************'",
+         "salt-call state.sls --state-output=changes common.submaster.getip",
+         "echo '*****************************************BASICS STATE COMPLETED******************************'",
          "sleep 1 || true",
-         "time salt-call -l info state.sls openstack",
+         "time salt-call state.sls openstack",
+         "salt-call state.sls openstack.restart",
          "echo '*****************************************OPENSTACK STATE COMPLETED******************************'",
          "/usr/local/bin/vinstall salt",
-         "salt-call state.sls openstack.keystone.apache2",
          "salt-call state.sls openstack.setup",
          "echo '*****************************************OPENSTACK SETUP STATE COMPLETED******************************'",
          "salt-call state.sls common.bridge",
          "salt-call state.sls openstack.restart",
          "salt-call state.sls virl.std",
          "salt-call state.sls virl.ank",
-         "echo '*****************************************ANK STD STATE COMPLETED******************************'",
-         "sleep 1 || true",
+         "service virl-std restart",
+         "service virl-uwm restart",
          "salt-call state.sls virl.guest",
-         "echo '*****************************************GUEST STATE COMPLETED******************************'",
-         "sleep 1|| true",
-         "salt-call state.sls openstack.restart",
          "salt-call state.sls virl.ramdisk",
          "salt-call state.sls virl.routervms",
          "salt-call state.sls virl.openvpn",
          "echo '*****************************************OPENVPN STATE COMPLETED******************************'",
-         "salt-call -l info state.sls virl.openvpn.packet",
+         "salt-call state.sls virl.openvpn.packet",
          "echo '*****************************************OPENVPN PACKET STATE COMPLETED******************************'",
     #This is to keep the sftp from failing and taking terraform out with it in case no vpn is actually installed
          "touch /var/local/virl/client.ovpn"

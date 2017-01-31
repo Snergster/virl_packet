@@ -1,0 +1,11 @@
+deb ftp://147.75.202.161/archive.ubuntu.com/ubuntu xenial main main/debian-installer restricted restricted/debian-installer universe multiverse
+deb ftp://147.75.202.161/archive.ubuntu.com/ubuntu xenial-security main restricted universe multiverse
+deb ftp://147.75.202.161/archive.ubuntu.com/ubuntu xenial-updates main restricted universe multiverse
+deb ftp://147.75.202.161/archive.ubuntu.com/ubuntu xenial-proposed main restricted universe multiverse
+deb ftp://147.75.202.161/archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse
+
+deb-src ftp://147.75.202.161/archive.ubuntu.com/ubuntu xenial-security main restricted universe multiverse
+deb-src ftp://147.75.202.161/archive.ubuntu.com/ubuntu xenial-updates main restricted universe multiverse
+deb-src ftp://147.75.202.161/archive.ubuntu.com/ubuntu xenial-proposed main restricted universe multiverse
+deb-src ftp://147.75.202.161/archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse
+
