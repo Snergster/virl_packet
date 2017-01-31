@@ -51,7 +51,8 @@ resource "packet_device" "virl" {
    provisioner "remote-exec" {
       inline = [
         "mkdir -p /etc/salt/minion.d",
-        "mkdir -p /etc/salt/pki/minion"
+        "mkdir -p /etc/salt/pki/minion",
+        "dpkg --add-architecture i386"
     ]
     }
     provisioner "file" {
