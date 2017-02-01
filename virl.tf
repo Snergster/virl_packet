@@ -20,8 +20,8 @@ resource "packet_device" "virl" {
         facility = "${var.packet_location}"
         operating_system = "ubuntu_16_04_image"
         billing_cycle = "hourly"
+#        user_data = "${file("conf/${var.packet_location}-cloud.config")}"
         project_id = "${packet_project.virl_project.id}"
-        user_data = "${file("conf/${var.packet_location}-cloud.config")}"
         depends_on = ["packet_ssh_key.virlkey","packet_project.virl_project"]
 
 # Alternate project_id. If you use a consistent project defined in settings.tf, uncomment the two lines below. Remember to comment out the two lines above!
