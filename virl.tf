@@ -20,7 +20,7 @@ resource "packet_device" "virl" {
         facility = "${var.packet_location}"
         operating_system = "ubuntu_16_04_image"
         billing_cycle = "hourly"
-#        user_data = "${file("conf/${var.packet_location}-cloud.config")}"
+        user_data = "${file("conf/${var.packet_location}-cloud.config")}"
         project_id = "${packet_project.virl_project.id}"
         depends_on = ["packet_ssh_key.virlkey","packet_project.virl_project"]
 
