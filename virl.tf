@@ -101,48 +101,153 @@ resource "packet_device" "virl" {
 /* comment multiline */
    provisioner "remote-exec" {
       inline = [
+
+         "printf '\n\n\033[1;36m**** STARTING CONFIGURATION ****\033[0m\n'",
          "set -e",
          "set -x",
          "apt-get install openssh-server  python-dev ntp traceroute ntpdate zile curl traceroute unzip swig sshpass crudini debconf-utils dkms qemu-kvm gcc cpu-checker openssl apt-show-versions htop apache2 libapache2-mod-wsgi mtools socat crudini telnet -y",
-         "echo '*****************************************PRESALT STATE COMPLETED******************************'",
+
+         "printf '\n\n\033[1;36m**** INSTALLING SALTSTACK ****\033[0m\n'",
+         "printf '\n\n\033[1;36m**** INSTALLING SALTSTACK ****\033[0m\n'",
          "sleep 1 || true",
          "echo 'wget -O install_salt.sh https://bootstrap.saltstack.com'",
-         "echo '*****************************************PRESALT STATE COMPLETED******************************'",
          "sleep 1 || true",
          "sh ./install_salt.sh -X -P stable",
-    # create virl user
+
+         "printf '\n\n\033[1;36m**** INSTALLING VIRL BASICS ****\033[0m\n'",
+
+         "printf '\n\n\033[1;36m**** Running common.users ****\033[0m\n'",
          "salt-call state.sls common.users",
-    # copy authorized keys from root to virl user
          "salt-call grains.setval mitaka true",
          "salt-call grains.setval mysql_password ${var.mysql_password}",
          "salt-call file.write /etc/salt/minion.d/openstack.conf 'mysql.pass: ${var.mysql_password}'",
+
+         "printf '\n\n\033[1;36m**** Copying VIRL keys ****\033[0m\n'",
          "salt-call state.sls virl.packet.keycopy",
-         "salt-call state.highstate",
-         "salt-call state.sls virl.basics",
-         "salt-call state.sls --state-output=changes common.submaster.getip",
-         "echo '*****************************************BASICS STATE COMPLETED******************************'",
-         "sleep 1 || true",
-         "time salt-call state.sls openstack",
-         "salt-call state.sls openstack.restart",
-         "echo '*****************************************OPENSTACK STATE COMPLETED******************************'",
+
+         "printf '\n\n\033[1;36m**** Installing Ubuntu baseline packages ****\033[0m\n'",
+         "salt-call state.sls common.ubuntu",
+
+         "printf '\n\n\033[1;36m**** Configuring rc-local ****\033[0m\n'",
+         "salt-call state.sls common.rc-local",
+
+         "printf '\n\n\033[1;36m**** Creating VIRL vinstall ****\033[0m\n'",
+         "salt-call state.sls virl.vinstall",
+
+         "printf '\n\n\033[1;36m**** Configuring Salt ****\033[0m\n'",
          "/usr/local/bin/vinstall salt",
-         "salt-call state.sls openstack.setup",
-         "echo '*****************************************OPENSTACK SETUP STATE COMPLETED******************************'",
-         "salt-call state.sls common.bridge",
+
+         "printf '\n\n\033[1;36m**** Configuring KVM ****\033[0m\n'",
+         "salt-call state.sls common.kvm",
+
+         "printf '\n\n\033[1;36m**** Configuring KSM ****\033[0m\n'",
+         "salt-call state.sls common.ksm",
+
+         "printf '\n\n\033[1;36m**** Configuring EFI BIOS ****\033[0m\n'",
+         "salt-call state.sls virl.efibios",
+
+         "printf '\n\n\033[1;36m**** Installing VIRL Scripts ****\033[0m\n'",
+         "salt-call state.sls virl.scripts",
+
+         "printf '\n\n\033[1;36m**** Installing VIRL pre-configuration script ****\033[0m\n'",
+         "salt-call state.sls virl.virl_setup",
+
+         "printf '\n\n\033[1;36m**** Installing / Configuring VIRL packages ****\033[0m\n'",
+         "salt-call state.sls common.virl-sa",
+
+         "printf '\n\n\033[1;36m**** Configuring VIRL Basics ****\033[0m\n'",
+         "salt-call state.sls virl.basics",
+
+         "printf '\n\n\033[1;36m**** INSTALLING OPENSTACK ****\033[0m\n'",
+         "sleep 1 || true",
+
+         "printf '\n\n\033[1;36m**** Installing MySQL ****\033[0m\n'",
+         "salt-call state.sls openstack.mysql.install",
+
+         "printf '\n\n\033[1;36m**** Creating OpenStack Accounts ****\033[0m\n'",
+         "salt-call state.sls openstack.mysql.os_accounts",
+
+         "printf '\n\n\033[1;36m**** Installing RabbitMQ ****\033[0m\n'",
+         "salt-call state.sls openstack.rabbitmq",
+
+         "printf '\n\n\033[1;36m**** Installing Keystone ****\033[0m\n'",
+         "salt-call state.sls openstack.keystone.install",
+
+         "printf '\n\n\033[1;36m**** Configuring Keystone ****\033[0m\n'",
+         "salt-call state.sls openstack.keystone.setup",
+
+         "printf '\n\n\033[1;36m**** Configuring Keystone End-points ****\033[0m\n'",
+         "salt-call state.sls openstack.keystone.endpoint",
+
+         "printf '\n\n\033[1;36m**** Configuring OpenStack Clients ****\033[0m\n'",
+         "salt-call state.sls openstack.osclients",
+
+         "printf '\n\n\033[1;36m**** Installing Glance ****\033[0m\n'",
+         "salt-call state.sls openstack.glance",
+
+         "printf '\n\n\033[1;36m**** Installing Neutron ****\033[0m\n'",
+         "salt-call state.sls openstack.neutron",
+
+         "printf '\n\n\033[1;36m**** Installing Nova ****\033[0m\n'",
+         "salt-call state.sls openstack.nova",
+
+         "printf '\n\n\033[1;36m**** Installing OpenStack Options ****\033[0m\n'",
+         "salt-call state.sls openstack.options",     
+
+         "printf '\n\n\033[1;36m**** Restarting OpenStack (1st-pass) ****\033[0m\n'",
          "salt-call state.sls openstack.restart",
-         "salt-call state.sls virl.std",
-         "salt-call state.sls virl.ank",
+
+         "printf '\n\n\033[1;36m**** INSTALLING VIRL ****\033[0m\n'",
+
+         "printf '\n\n\033[1;36m**** Configuring Bridges ****\033[0m\n'",
+         "salt-call state.sls common.bridge",
+
+         "printf '\n\n\033[1;36m**** Restarting OpenStack (2nd-pass) ****\033[0m\n'",
+         "salt-call state.sls openstack.restart",
+
+         "printf '\n\n\033[1;36m**** Installing AutoNetkit ****\033[0m\n'",
+         "salt-call state.sls virl.ank",  
+
+         "printf '\n\n\033[1;36m**** Installing STD prerequisites ****\033[0m\n'",
+         "salt-call state.sls virl.std.prereq",
+
+         "printf '\n\n\033[1;36m**** Installing STD clients ****\033[0m\n'",
+         "salt-call state.sls virl.std.clients",
+
+         "printf '\n\n\033[1;36m**** Running common.ifb ****\033[0m\n'",
+         "salt-call state.sls common.ifb",
+
+         "printf '\n\n\033[1;36m**** Installing STD tap-counter ****\033[0m\n'",
+         "salt-call state.sls virl.std.tap-counter",
+
+         "printf '\n\n\033[1;36m**** Installing STD ****\033[0m\n'",
+         "salt-call state.sls virl.std.install",
+
+         "printf '\n\n\033[1;36m**** Restarting VIRL services ****\033[0m\n'",
          "service virl-std restart",
          "service virl-uwm restart",
+
+         "printf '\n\n\033[1;36m**** Configuring OpenStack networks ****\033[0m\n'",
+         "salt-call state.sls openstack.setup",
+
+         "printf '\n\n\033[1;36m**** Installing VIRL guest user ****\033[0m\n'",
          "salt-call state.sls virl.guest",
+
+         "printf '\n\n\033[1;36m**** Activating RAMdisk if enabled ****\033[0m\n'",
          "salt-call state.sls virl.ramdisk",
+
+         "printf '\n\n\033[1;36m**** Installing Router VMs ****\033[0m\n'",
          "salt-call state.sls virl.routervms",
+
+         "printf '\n\n\033[1;36m**** Installing OpenVPN ****\033[0m\n'",
          "salt-call state.sls virl.openvpn",
-         "echo '*****************************************OPENVPN STATE COMPLETED******************************'",
          "salt-call state.sls virl.openvpn.packet",
-         "echo '*****************************************OPENVPN PACKET STATE COMPLETED******************************'",
-    #This is to keep the sftp from failing and taking terraform out with it in case no vpn is actually installed
-         "touch /var/local/virl/client.ovpn"
+         "touch /var/local/virl/client.ovpn",
+
+         "printf '\n\n\033[1;36m**** Setting Version Grain ****\033[0m\n'",
+         "VERSION=`/usr/bin/salt-call pillar.get version:virl | cut -d':' -f2` && salt-call grains.setval virl_release $VERSION",
+
+         "printf '\n\n\033[1;36m**** DONE ****'"
 
    ]
   }
