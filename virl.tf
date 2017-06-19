@@ -108,7 +108,6 @@ resource "packet_device" "virl" {
          "apt-get install openssh-server  python-dev ntp traceroute ntpdate zile curl traceroute unzip swig sshpass crudini debconf-utils dkms qemu-kvm gcc cpu-checker openssl apt-show-versions htop apache2 libapache2-mod-wsgi mtools socat crudini telnet -y",
 
          "printf '\n\n\033[1;36m**** INSTALLING SALTSTACK ****\033[0m\n'",
-         "printf '\n\n\033[1;36m**** INSTALLING SALTSTACK ****\033[0m\n'",
          "sleep 1 || true",
          "echo 'wget -O install_salt.sh https://bootstrap.saltstack.com'",
          "sleep 1 || true",
